@@ -34,6 +34,10 @@ class GlitterApp extends StatelessWidget {
     return MaterialApp(
       title: 'Glitter',
       home: Glitter(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+        useMaterial3: true,
+      ),
     );
   }
 }
@@ -90,8 +94,9 @@ class _GlitterState extends State<Glitter> with TickerProviderStateMixin {
   Widget _createAnimatedGlitterPiece() {
     final customController = _controllers[_random.nextInt(5)];
 
-    final colorTween =
-        ColorTween(begin: _getRandomColor(), end: Colors.transparent);
+    final colorTween = ColorTween(
+        begin: _getRandomColor(Theme.of(context).colorScheme.secondary.alpha),
+        end: Colors.transparent);
     final tweenAnimation = colorTween.animate(customController);
 
     final positionAnimation =
@@ -125,8 +130,9 @@ class _GlitterState extends State<Glitter> with TickerProviderStateMixin {
   Widget _createReverseAnimatedGlitterPiece() {
     final customController = _controllers[_random.nextInt(5)];
 
-    final colorTween =
-        ColorTween(begin: Colors.transparent, end: _getRandomColor());
+    final colorTween = ColorTween(
+        begin: Colors.transparent,
+        end: _getRandomColor(Theme.of(context).colorScheme.primary.alpha));
     final animation = colorTween.animate(customController);
     final pieceSize = _randomPieceSize();
     final piece = AnimatedBuilder(
@@ -153,7 +159,9 @@ class _GlitterState extends State<Glitter> with TickerProviderStateMixin {
   Widget _createStaticGlitterPiece() {
     final pieceSize = _randomPieceSize();
     final piece = Container(
-      decoration: _randomDecoration().copyWith(color: _getRandomColor(170)),
+      decoration: _randomDecoration().copyWith(
+          color: _getRandomColor(
+              Theme.of(context).colorScheme.primary.alpha)), //170)),
       width: pieceSize,
       height: pieceSize,
     );
@@ -247,12 +255,20 @@ class _GlitterState extends State<Glitter> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Container(
-        height: _height,
-        width: _width,
-        color: Colors.pink[100],
-        // 10000 is a bad idea!
-        child: Stack(children: _createGlitterPieces(1200)),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            height: _height,
+            width: _width,
+            color: Theme.of(context)
+                .colorScheme
+                .primaryContainer, // Colors.pink[100],
+            // 10000 is a bad idea!
+            child: Stack(children: _createGlitterPieces(1200)),
+          ),
+        ],
       )),
     );
   }
