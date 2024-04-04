@@ -40,7 +40,7 @@ class GlitterApp extends StatelessWidget {
 
 /// Glitter modeled off of this gif: https://giphy.com/gifs/pink-5K5oXc0CD7ghG
 class Glitter extends StatefulWidget {
-  Glitter({Key key}) : super(key: key);
+  Glitter({Key? key}) : super(key: key);
 
   @override
   _GlitterState createState() => _GlitterState();
@@ -52,7 +52,7 @@ class _GlitterState extends State<Glitter> with TickerProviderStateMixin {
   /// Gets pseudo-random color (leans more purple, less dark-green).
   ///
   /// Can also use a predefined palette of colors.
-  Color _getRandomColor([int alpha]) {
+  Color _getRandomColor([int? alpha]) {
     return Color.fromARGB(alpha ?? 255, _random.nextInt(155) + 100,
         _random.nextInt(255), _random.nextInt(150) + 55);
   }
@@ -104,7 +104,7 @@ class _GlitterState extends State<Glitter> with TickerProviderStateMixin {
 
     return AnimatedBuilder(
       animation: customController,
-      builder: (BuildContext context, Widget widget) {
+      builder: (BuildContext context, Widget? widget) {
         final piece = Container(
           width: pieceSize,
           height: pieceSize,
@@ -131,7 +131,7 @@ class _GlitterState extends State<Glitter> with TickerProviderStateMixin {
     final pieceSize = _randomPieceSize();
     final piece = AnimatedBuilder(
       animation: animation,
-      builder: (BuildContext context, Widget widget) {
+      builder: (BuildContext context, Widget? widget) {
         return Container(
           decoration: _randomDecoration().copyWith(color: animation.value),
           width: pieceSize,
@@ -175,7 +175,7 @@ class _GlitterState extends State<Glitter> with TickerProviderStateMixin {
     final sparkleSize = _random.nextInt(80).toDouble() + 20;
     final piece = AnimatedBuilder(
       animation: animation,
-      builder: (BuildContext context, Widget widget) {
+      builder: (BuildContext context, Widget? widget) {
         final decoration = BoxDecoration(
           borderRadius: BorderRadius.circular(4),
           backgroundBlendMode: BlendMode.colorDodge,
